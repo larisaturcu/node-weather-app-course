@@ -13,3 +13,5 @@
 - setup routes for different endpoints 
     // app.get('', (req, res) = {
     }
+- send response as html and json
+- configure express to serve static assets
