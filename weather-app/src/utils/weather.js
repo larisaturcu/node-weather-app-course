@@ -9,7 +9,6 @@ const weatherReq = (latitude, longitude, callback) => {
             } else if (!body.current) {
                 callback('unable to connect retrieve weather for location ' + latitude + ',' + longitude, undefined);
             } else {
-                console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
                 callback(undefined, {
                     description: body.current.weather_descriptions[0]
                 });

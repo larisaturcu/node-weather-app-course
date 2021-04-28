@@ -1,10 +1,11 @@
 const path = require('path')
 const express = require('express');
 const weather = require('./utils/weather')
-const geocode = require('./utils/geocode')
+const geocode = require('./utils/geocode');
+const { response } = require('express');
 
 const app = express();
-const viewsPath=path.join(__dirname, '../templates');
+const viewsPath = path.join(__dirname, '../templates');
 
 // set handlebars as the template engine
 app.set('view engine', 'hbs');
@@ -27,25 +28,21 @@ app.get('', (req, res) => { // home page uses handlebars
 app.get('/weather/:location', (req, res) => {
   const location = req.params.location;
   if (!location) {
-    res.send({error: 'Please provide a location'});
-    } else {
-      geocode(location, (error, { latitude, longitude } = {}) => {
-        if (error) {
-          res.send({error: 'Something went wrong when calling geocode: ' + error});
-        } else {
-            weather(latitude, longitude, (error, { description } = {}) => {
-              if (error) {
-                res.send({error: 'Something went wrong when calling weather: ' + error});
-              } else {
-                res.send({
-                  location,
-                  forecast:'Weather in ' + location + ' is ' + description});
-              }
-          });
-        }
-      });
-    }
-  });
+    return res.send({ error: 'Please provide a location' });
+  }
+  getWeatherForcat(location, res);
+
+});
+
+app.get('/weather2', (req, res) => {
+  const location = req.query.search;
+  if (!location) {
+    return res.send({ error: 'Please provide search input' });
+  }
+  getWeatherForcat(location, res);
+})
+
+
 
 app.get('/*', (req, res) => {
   res.send('NotFound')
@@ -55,3 +52,22 @@ app.get('/*', (req, res) => {
 app.listen(3000, () => {
   console.log('server started on port 3000');
 });
+
+const getWeatherForcat = (location, res) => {
+  geocode(location, (error, { latitude, longitude } = {}) => {
+    if (error) {
+      res.send({ error: 'Something went wrong when calling geocode: ' + error });
+    } else {
+      weather(latitude, longitude, (error, { description } = {}) => {
+        if (error) {
+          res.send({ error: 'Something went wrong when calling weather: ' + error });
+        } else {
+          res.send({
+            location,
+            forecast: 'Weather in ' + location + ' is ' + description
+          });
+        }
+      });
+    }
+  });
+}
