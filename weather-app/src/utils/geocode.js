@@ -6,7 +6,7 @@ const geocodeReq = (city, callback) => {
         (error, response, body) => {
             if (error) {
                 callback('unable to connect to api', undefined);
-            } else if (!body.features) {
+            } else if (!body.features || body.features.length === 0) {
                 callback('unable to connect retrieve location for ' + city, undefined);
             } else {
                 callback(undefined, {

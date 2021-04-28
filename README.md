@@ -19,3 +19,4 @@
 - use a template engine to render dynamic pages for header and footer - hbs : a pluging for express from handlebars
 
 3. create http endpoints for the backend
+4. create form to allow the user to type in the location and fetch data from backend
