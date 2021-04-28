@@ -5,6 +5,10 @@ const geocodeReq = (city, callback) => {
     const url = 'http://api.mapbox.com/geocoding/v5/mapbox.places/' + city + '.json?access_token=pk.eyJ1IjoibGFyaXNhdHVyY3UiLCJhIjoiY2ttZ2hoanZqMnp2dzJvbGFhdjgxMmVtaCJ9.LaMk76OruNX-uyhj4TUEhA';
     request({ url, json: true },
         (error, response, body) => {
+<<<<<<< HEAD
+=======
+            console.log('error:', error); // Print the error if one occurred
+>>>>>>> c678b0d2a6c736f2a29ea9302c01e5b3ae68f40f
             if (error) {
                 callback('unable to connect to api', undefined);
             } else if (!body.features) {
