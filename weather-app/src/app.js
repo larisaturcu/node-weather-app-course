@@ -5,6 +5,7 @@ const geocode = require('./utils/geocode');
 const { response } = require('express');
 
 const app = express();
+const port = process.env.PORT || 3000;
 const viewsPath = path.join(__dirname, '../templates');
 
 // set handlebars as the template engine
@@ -48,10 +49,6 @@ app.get('/*', (req, res) => {
   res.send('NotFound')
 });
 
-//start the server on the port 3000, and print a message to make sure the server started
-app.listen(3000, () => {
-  console.log('server started on port 3000');
-});
 
 const getWeatherForcat = (location, res) => {
   geocode(location, (error, { latitude, longitude } = {}) => {
@@ -71,3 +68,9 @@ const getWeatherForcat = (location, res) => {
     }
   });
 }
+
+
+//start the server on the port 3000, and print a message to make sure the server started
+app.listen(port, () => {
+  console.log('server started on port ' + port);
+});
