@@ -1,4 +1,6 @@
 const express = require('express');
+const weather = require('./utils/weather')
+const geocode = require('./utils/geocode')
 
 const app = express();
 
@@ -11,13 +13,32 @@ app.get('', (req, res) => {
 });
 
 app.get('/help', (req, res) => {
-  res.send('Help page')
+  // response sent as html
+  res.send('<h1>Help page</h1>')
 });
 
 app.get('/weather/:location', (req, res) => {
   const location = req.params.location;
-  res.send('weather for ' + location) 
-});
+  if (!location) {
+    res.send({error: 'Please provide a location'});
+    } else {
+      geocode(location, (error, { latitude, longitude } = {}) => {
+        if (error) {
+          res.send({error: 'Something went wrong when calling geocode: ' + error});
+        } else {
+            weather(latitude, longitude, (error, { description } = {}) => {
+              if (error) {
+                res.send({error: 'Something went wrong when calling weather: ' + error});
+              } else {
+                res.send({
+                  location,
+                  forecast:'Weather in ' + location + ' is ' + description});
+              }
+          });
+        }
+      });
+    }
+  });
 
 app.get('/*', (req, res) => {
   res.send('NotFound')
@@ -50,7 +71,6 @@ app.listen(3000, () => {
 //           console.log('Weather in ' + location + ' is ' + description);
 //         }
 //       });
-
 //     }
 //   });
 // }
