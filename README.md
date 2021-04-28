@@ -15,3 +15,5 @@
     }
 - send response as html and json
 - configure express to serve static assets
+- define static html files for index and help page
+- use a template engine to render dynamic pages for header and footer - hbs : a pluging for express from handlebars
