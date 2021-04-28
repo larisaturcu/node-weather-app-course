@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, '../public')))
 
 app.get('', (req, res) => { // home page uses handlebars 
   res.render('index', {
-    title: 'home page',
+    title: 'Weather',
     author: 'node course'
   })
 });
@@ -37,7 +37,7 @@ app.get('/weather/:location', (req, res) => {
 app.get('/weather2', (req, res) => {
   const location = req.query.search;
   if (!location) {
-    return res.send({ error: 'Please provide search input' });
+    return res.send({ error: 'Please provide a location' });
   }
   getWeatherForcat(location, res);
 })
@@ -64,7 +64,7 @@ const getWeatherForcat = (location, res) => {
         } else {
           res.send({
             location,
-            forecast: 'Weather in ' + location + ' is ' + description
+            forecast: 'The weather in ' + location + ' is ' + description
           });
         }
       });

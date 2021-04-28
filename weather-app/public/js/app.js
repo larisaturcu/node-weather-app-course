@@ -7,14 +7,24 @@ console.log('client side js that runs in the browser');
 //     });
 // });
 
+const weatherForm = document.querySelector('form');
+const searchElement = document.querySelector('input');
+const messageOne = document.querySelector("#message1");
+const messageTwo = document.querySelector("#message2");
 
-fetch('/weather2?search=Lyon').then((response)=> {
-    response.json().then((data) => {
-        if (data.error) {
-            console.log(data.error)
-        } else {
-            console.log(data.location);
-            console.log(data.forecast);
-        }
+messageOne.textContent = "Loading ... "
+messageOne.textContent = " "
+weatherForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const location = searchElement.value;
+    fetch('/weather2?search=' + location).then((response) => {
+        response.json().then((data) => {
+            if (data.error) {
+                messageOne.textContent = data.error;
+            } else {
+                messageTwo.textContent = data.forecast;
+            }
+        });
     });
+
 })
