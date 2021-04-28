@@ -4,15 +4,18 @@ const weather = require('./utils/weather')
 const geocode = require('./utils/geocode')
 
 const app = express();
+const viewsPath=path.join(__dirname, '../templates');
 
 // set handlebars as the template engine
 app.set('view engine', 'hbs');
+app.set('views', viewsPath);
 
+//setup static directory to serve
 app.use(express.static(path.join(__dirname, '../public')))
 
 //app.com
 //app.com/help
-//app.com/about
+//app.com/weather
 
 app.get('', (req, res) => { // home page uses handlebars 
   res.render('index', {
