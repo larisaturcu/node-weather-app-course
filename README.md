@@ -8,3 +8,8 @@
  - call the modules from the main app.js file
 
 2. install and configure express
+
+- create a new express server
+- setup routes for different endpoints 
+    // app.get('', (req, res) = {
+    }
